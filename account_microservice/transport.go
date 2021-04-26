@@ -54,7 +54,14 @@ func MakeHTTPHandler(s AccountService, logger log.Logger) http.Handler {
 		options...,
 	))
 
-	handler := cors.Default().Handler(r)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"POST", "GET", "OPTIONS"},
+		// Enable Debugging for testing, consider disabling in production
+		Debug: true,
+	})
+
+	handler := c.Handler(r)
 
 	return handler
 }
