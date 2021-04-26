@@ -79,7 +79,7 @@ func decodeAmountRequest(_ context.Context, r *http.Request) (request interface{
 	if !ok {
 		return nil, ErrBadRouting
 	}
-	return GetAmountRequest{id}, nil
+	return GetAmountRequest{ClientID: id}, nil
 }
 
 func decodeAddRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -98,7 +98,7 @@ func decodeUserInformationRequest(_ context.Context, r *http.Request) (request i
 	if !ok {
 		return nil, ErrBadRouting
 	}
-	return GetUserInformationRequest{id}, nil
+	return GetUserInformationRequest{ClientID: id}, nil
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
