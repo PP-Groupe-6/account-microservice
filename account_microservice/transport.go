@@ -33,14 +33,14 @@ func MakeHTTPHandler(s AccountService, logger log.Logger) http.Handler {
 	// GET		/users/ 		returns the informations of the param account
 	// POST 	/users/			adds a user
 
-	r.Methods("GET").Path("/amount/").Handler(httptransport.NewServer(
+	r.Methods("GET").Path("/amount/{id}").Handler(httptransport.NewServer(
 		e.GetAmountEndpoint,
 		decodeAmountRequest,
 		encodeResponse,
 		options...,
 	))
 
-	r.Methods("GET").Path("/users/").Handler(httptransport.NewServer(
+	r.Methods("GET").Path("/users/{id}").Handler(httptransport.NewServer(
 		e.GetUserInformationEndpoint,
 		decodeUserInformationRequest,
 		encodeResponse,
@@ -74,11 +74,12 @@ type errorer interface {
 
 func decodeAmountRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 	fmt.Println("Recieved amount request")
-	var req GetAmountRequest
-	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
-		return nil, e
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+	if !ok {
+		return nil, ErrBadRouting
 	}
-	return req, nil
+	return GetAmountRequest{id}, nil
 }
 
 func decodeAddRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -92,12 +93,12 @@ func decodeAddRequest(_ context.Context, r *http.Request) (request interface{}, 
 
 func decodeUserInformationRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 	fmt.Println("Recieved user info request")
-	var req GetUserInformationRequest
-
-	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
-		return nil, e
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+	if !ok {
+		return nil, ErrBadRouting
 	}
-	return req, nil
+	return GetUserInformationRequest{id}, nil
 }
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
