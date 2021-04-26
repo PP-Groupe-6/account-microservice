@@ -57,7 +57,8 @@ func MakeHTTPHandler(s AccountService, logger log.Logger) http.Handler {
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"POST", "GET", "OPTIONS"},
-		AllowedHeaders: []string{"Content-Type", "Accept", "Accept-Encoding", "Authorization"},
+		//AllowedHeaders: []string{"Content-Type", "Accept", "Accept-Encoding", "Authorization"},
+		AllowedHeaders: []string{"*"},
 		// Enable Debugging for testing, consider disabling in production
 		Debug: true,
 	})
@@ -116,7 +117,7 @@ func encodeResponse(ctx context.Context, w http.ResponseWriter, response interfa
 func encodeError(_ context.Context, err error, w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS")
-
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	if err == nil {
 		panic("encodeError with nil error")
 	}
