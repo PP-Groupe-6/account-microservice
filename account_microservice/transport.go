@@ -46,7 +46,7 @@ func MakeHTTPHandler(s AccountService, logger log.Logger) http.Handler {
 		options...,
 	))
 
-	r.Methods("OPTIONS").Path("/users/").Handler(httptransport.NewServer(
+	r.Methods("POST").Path("/users/").Handler(httptransport.NewServer(
 		e.AddEndpoint,
 		decodeAddRequest,
 		encodeResponse,
