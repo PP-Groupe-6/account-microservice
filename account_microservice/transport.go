@@ -86,6 +86,7 @@ func decodeUserInformationRequest(_ context.Context, r *http.Request) (request i
 
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, DELETE")
 	if e, ok := response.(errorer); ok && e.error() != nil {
 		// Not a Go kit transport error, but a business-logic error.
 		// Provide those as HTTP errors.
