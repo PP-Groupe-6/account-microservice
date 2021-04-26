@@ -10,6 +10,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/transport"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 
 	httptransport "github.com/go-kit/kit/transport/http"
 )
@@ -53,7 +54,9 @@ func MakeHTTPHandler(s AccountService, logger log.Logger) http.Handler {
 		options...,
 	))
 
-	return r
+	handler := cors.Default().Handler(r)
+
+	return handler
 }
 
 type errorer interface {
