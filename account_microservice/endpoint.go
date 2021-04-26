@@ -83,10 +83,11 @@ func MakeAddEndpoint(s AccountService) endpoint.Endpoint {
 			0,
 		}
 		account, err := s.Add(ctx, toAdd)
+		formatedName := account.Surname + " " + account.Name
 		if (err == nil && account != Account{}) {
-			return AddResponse{account}, nil
+			return GetUserInformationResponse{formatedName, account.MailAdress, account.PhoneNumber}, nil
 		} else {
-			return AddResponse{}, err
+			return GetUserInformationResponse{formatedName, account.MailAdress, account.PhoneNumber}, err
 		}
 	}
 }
