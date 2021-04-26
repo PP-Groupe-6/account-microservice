@@ -2,7 +2,6 @@ package account_microservice
 
 import (
 	"context"
-	"strconv"
 	"strings"
 
 	"github.com/go-kit/kit/endpoint"
@@ -63,7 +62,7 @@ func MakeGetUserInformationEndpoint(s AccountService) endpoint.Endpoint {
 type AddRequest struct {
 	ClientID    string
 	FullName    string
-	PhoneNumber int
+	PhoneNumber string
 	MailAdress  string
 }
 
@@ -75,20 +74,19 @@ func MakeAddEndpoint(s AccountService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(AddRequest)
 		sepName := strings.Split(req.FullName, " ")
-		phone := strconv.Itoa(req.PhoneNumber)
 		toAdd := Account{
 			req.ClientID,
 			sepName[0],
 			sepName[1],
-			phone,
+			req.PhoneNumber,
 			req.MailAdress,
 			0,
 		}
 		account, err := s.Add(ctx, toAdd)
 		if (err == nil && account != Account{}) {
-			return true, nil
+			return AddResponse{true}, nil
 		} else {
-			return false, err
+			return AddResponse{false}, err
 		}
 	}
 }

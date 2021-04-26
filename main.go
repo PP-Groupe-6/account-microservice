@@ -9,12 +9,12 @@ import (
 )
 
 func main() {
-	info := accountService.dbConnexionInfo{
-		"postgre://",
-		"5432",
-		"prix_banque_test",
-		"admin",
-		"secret",
+	info := accountService.DbConnexionInfo{
+		DbUrl:    "postgre://",
+		DbPort:   "5432",
+		DbName:   "prix_banque_test",
+		Username: "dev",
+		Password: "dev",
 	}
 
 	service := accountService.NewAccountService(info)
