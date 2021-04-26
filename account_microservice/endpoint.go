@@ -67,7 +67,7 @@ type AddRequest struct {
 }
 
 type AddResponse struct {
-	Added bool `json:"added"`
+	Account Account `json:"client"`
 }
 
 func MakeAddEndpoint(s AccountService) endpoint.Endpoint {
@@ -84,9 +84,9 @@ func MakeAddEndpoint(s AccountService) endpoint.Endpoint {
 		}
 		account, err := s.Add(ctx, toAdd)
 		if (err == nil && account != Account{}) {
-			return AddResponse{true}, nil
+			return AddResponse{account}, nil
 		} else {
-			return AddResponse{false}, err
+			return AddResponse{}, err
 		}
 	}
 }
