@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/go-kit/kit/log"
@@ -60,6 +61,7 @@ type errorer interface {
 }
 
 func decodeAmountRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	fmt.Println("Recieved amount request")
 	var req GetAmountRequest
 	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
 		return nil, e
@@ -68,6 +70,7 @@ func decodeAmountRequest(_ context.Context, r *http.Request) (request interface{
 }
 
 func decodeAddRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	fmt.Println("Recieved add request")
 	var req AddRequest
 	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
 		return nil, e
@@ -76,6 +79,7 @@ func decodeAddRequest(_ context.Context, r *http.Request) (request interface{}, 
 }
 
 func decodeUserInformationRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	fmt.Println("Recieved user info request")
 	var req GetUserInformationRequest
 
 	if e := json.NewDecoder(r.Body).Decode(&req); e != nil {
