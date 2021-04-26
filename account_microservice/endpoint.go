@@ -2,6 +2,7 @@ package account_microservice
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/go-kit/kit/endpoint"
@@ -28,7 +29,7 @@ type GetAmountRequest struct {
 }
 
 type GetAmountResponse struct {
-	AccountAmount float32 `json:"amount"`
+	AccountAmount string `json:"amount"`
 }
 
 func MakeGetAmountEndpoint(s AccountService) endpoint.Endpoint {
@@ -36,7 +37,7 @@ func MakeGetAmountEndpoint(s AccountService) endpoint.Endpoint {
 		req := request.(GetAmountRequest)
 		amount, err := s.GetAmountForID(ctx, req.ClientID)
 
-		return GetAmountResponse{float32(amount)}, err
+		return GetAmountResponse{fmt.Sprint(amount)}, err
 	}
 }
 
