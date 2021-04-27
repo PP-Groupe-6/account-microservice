@@ -15,6 +15,19 @@ Ce microservice se lance sur localhost:8000 par défaut. Pour en changer la conf
 err := http.ListenAndServe(":<port>", accountService.MakeHTTPHandler(service, logger))
 ```
 
+## Comment paramétrer l'accès à la base de données
+
+Pour paramétrer l'accès à la base de données il suffit de modifier la structure info présente dans le (main)[https://github.com/PP-Groupe-6/account-microservice/blob/master/main.go] :
+```go
+	info := accountService.DbConnexionInfo{
+		DbUrl:    "postgre://",
+		DbPort:   "5432",
+		DbName:   "prix_banque_test",
+		Username: "dev",
+		Password: "dev",
+	}
+```
+
 Pour tester le microservice nous conseillons l'outil [Postman](https://www.postman.com) et [la collection fournie avec le microservice](https://github.com/PP-Groupe-6/account-microservice/blob/master/Account.postman_collection.json).
 
 La liste des Url est la suivante :
