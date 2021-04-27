@@ -68,6 +68,8 @@ func (s *accountService) Add(ctx context.Context, account Account) (Account, err
 
 	db := GetDbConnexion(s.DbInfos)
 
+	account.AccountAmount = 2000
+
 	tx := db.MustBegin()
 	res := tx.MustExec("INSERT INTO account VALUES ('" + account.ClientID + "','" + account.Name + "','" + account.Surname + "','" + account.PhoneNumber + "','" + account.MailAdress + "'," + fmt.Sprint(account.AccountAmount) + ")")
 	tx.Commit()
