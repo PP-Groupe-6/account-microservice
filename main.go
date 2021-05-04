@@ -10,7 +10,7 @@ import (
 
 func main() {
 	info := accountService.DbConnexionInfo{
-		DbUrl:    "postgre://",
+		DbUrl:    "postgre://postgres",
 		DbPort:   "5432",
 		DbName:   "prix_banque_test",
 		Username: "dev",
